@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration>
+
+    <!-- Консольный аппендер -->
+    <appender name="console" class="org.apache.log4j.ConsoleAppender">
+        <param name="target" value="System.out"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <!-- Формат вывода -->
+            <param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss}] %-5p %c{1} - %m%n"/>
+        </layout>
+    </appender>
+
+    <!-- Файловый аппендер -->
+    <appender name="file" class="org.apache.log4j.RollingFileAppender">
+        <param name="file" value="log/user-service.log"/> <!--Имя файла -->
+
+        <param name="append" value="true"/> <!-- означает что будет до записывать в файл не создавая новый -->
+        <param name="MaxFileSize" value="1KB"/>  <!-- когда будем достигать 1КБ будем создавать следующий -->
+        <param name="MaxBackupIndex" value="10"/>  <!-- будем создавать 10 файлов, а когда будет больше 10 будем перезаписывать начиная с 1-го -->
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss}] %-5p %c - %m%n"/>
+        </layout>
+
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="ALL"/>
+        </filter>
+    </appender>
+
+    <!-- Корневой логгер -->
+    <root>
+        <level value="trace"/>
+<!--        <appender-ref ref="console"/>-->
+        <appender-ref ref="file"/>
+    </root>
+
+</log4j:configuration>
