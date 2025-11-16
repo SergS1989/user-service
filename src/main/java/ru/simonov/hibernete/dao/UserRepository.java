@@ -3,6 +3,7 @@ package ru.simonov.hibernete.dao;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import ru.simonov.hibernete.entity.User;
+import ru.simonov.hibernete.exeption.MyException;
 
 import java.util.Optional;
 
@@ -23,6 +24,11 @@ public class UserRepository {
 
 
     public void update(User user) {
+
+        Optional<User> userFound = Optional.ofNullable(entityManager.find(User.class, user.getId()));
+        if (userFound.isEmpty()) {
+            throw new MyException("Такого пользователя нет");
+        }
         entityManager.merge(user);
     }
 

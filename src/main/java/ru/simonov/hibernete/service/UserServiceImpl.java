@@ -1,6 +1,5 @@
 package ru.simonov.hibernete.service;
 
-import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import ru.simonov.hibernete.dao.UserRepository;
 import ru.simonov.hibernete.entity.User;
@@ -35,7 +34,7 @@ public class UserServiceImpl implements UserService {
                     user1.setAge(age);
                     userRepository.update(user1);
                 }, () -> {
-                    new MyException("пользователь с id = " + id + " не найден");
+                    throw  new MyException("пользователь с id = " + id + " не найден");
                 });
     }
 
