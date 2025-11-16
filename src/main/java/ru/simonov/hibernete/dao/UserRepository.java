@@ -1,38 +1,33 @@
 package ru.simonov.hibernete.dao;
 
 import jakarta.persistence.EntityManager;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import ru.simonov.hibernete.entity.User;
 
 import java.util.Optional;
 
 @RequiredArgsConstructor
-public class UserRepository implements Repository<Integer, User>{
-
-    private final Class<User> clazz;
-
+public class UserRepository {
     private final EntityManager entityManager;
 
-    @Override
-    public User save(User entity) {
-        entityManager.persist(entity);
-        return entity;
+    public User save(User user) {
+        entityManager.persist(user);
+        return user;
     }
 
-    @Override
-    public void delete(Integer id) {
-        entityManager.remove(entityManager.find(clazz, id));
-        entityManager.flush();
+
+    public void delete(User user) {
+            entityManager.remove(user);
+            entityManager.flush();
     }
 
-    @Override
-    public void update(User entity) {
-        entityManager.merge(entity);
+
+    public void update(User user) {
+        entityManager.merge(user);
     }
 
-    @Override
+
     public Optional<User> findById(Integer id) {
-        return Optional.ofNullable(entityManager.find(clazz, id));
+        return Optional.ofNullable(entityManager.find(User.class, id));
     }
 }
